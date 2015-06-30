@@ -13,7 +13,7 @@ public class ParkingLot {
     }
 
     public Ticket park(Car car) throws ParkingLotFullException {
-        if (remainingLots() == 0)
+        if (isFull())
             throw new ParkingLotFullException();
 
         ParkedCar parkedCar = new ParkedCar(car);
@@ -25,14 +25,29 @@ public class ParkingLot {
         return poolNum - parkedCars.size();
     }
 
-    public Car fetch(Ticket ticket) {
-        List<ParkedCar> parkedCars = this.parkedCars.stream()
-                .filter((parkedCar) -> parkedCar.isMatch(ticket))
-                .collect(Collectors.toList());
+    public boolean isFull() {return remainingLots() == 0;}
 
-        if (parkedCars.size() == 0)
+    public Car fetch(Ticket ticket) {
+        List<ParkedCar> parkedCars = getParkedCars(ticket);
+
+        if (!isCarIn(parkedCars))
             return null;
 
         return parkedCars.get(0).getCar();
+    }
+
+    public boolean isCarIn(Ticket ticket){
+        List<ParkedCar> parkedCars = getParkedCars(ticket);
+        return isCarIn(parkedCars);
+    }
+
+    private boolean isCarIn(List<ParkedCar> parkedCars) {
+        return parkedCars.size() != 0;
+    }
+
+    private List<ParkedCar> getParkedCars(Ticket ticket) {
+        return this.parkedCars.stream()
+                    .filter((parkedCar) -> parkedCar.isMatch(ticket))
+                    .collect(Collectors.toList());
     }
 }

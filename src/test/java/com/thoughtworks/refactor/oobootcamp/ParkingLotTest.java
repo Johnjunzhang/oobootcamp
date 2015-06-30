@@ -12,55 +12,47 @@ public class ParkingLotTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
     private final ParkingLot parkingLot = new ParkingLot(20);
+    private final Car car = new Car("111111");
+    private final Car car2 = new Car("22222");
 
     @Test
     public void should_park_a_car_to_parking_lot() throws ParkingLotFullException {
-        Car car = new Car("111111");
-        Ticket ticket = this.parkingLot.park(car);
+        Ticket ticket = parkingLot.park(car);
         assertNotNull(ticket);
-        assertEquals(19, this.parkingLot.remainingLots());
+        assertEquals(19, parkingLot.remainingLots());
     }
 
     @Test
     public void should_fetch_the_parked_car_by_parked_ticket_given_park_one_car() throws ParkingLotFullException {
-        Car car = new Car("111111");
-        Ticket ticket = this.parkingLot.park(car);
+        Ticket ticket = parkingLot.park(car);
 
-        Car fetchedCar = this.parkingLot.fetch(ticket);
+        Car fetchedCar = parkingLot.fetch(ticket);
         assertEquals(car, fetchedCar);
     }
 
     @Test
     public void should_fetch_the_parked_car_by_parked_ticket_given_park_two_cars() throws ParkingLotFullException {
-        Car car = new Car("111111");
-        this.parkingLot.park(car);
+        parkingLot.park(car);
+        Ticket ticket2 = parkingLot.park(car2);
 
-        Car car2 = new Car("22222");
-        Ticket ticket2 = this.parkingLot.park(car2);
-
-        Car fetchedCar = this.parkingLot.fetch(ticket2);
+        Car fetchedCar = parkingLot.fetch(ticket2);
         assertEquals(car2, fetchedCar);
     }
 
     @Test
     public void should_not_fetch_any_parked_car_given_a_wrong_ticket() throws ParkingLotFullException {
-        Car car = new Car("111111");
-        this.parkingLot.park(car);
+        parkingLot.park(car);
+        parkingLot.park(car2);
 
-        Car car2 = new Car("22222");
-        this.parkingLot.park(car2);
-
-        Car fetchedCar = this.parkingLot.fetch(new Ticket());
+        Car fetchedCar = parkingLot.fetch(new Ticket());
         assertNull(fetchedCar);
     }
 
     @Test
     public void should_not_parked_car_successfully_given_parking_lot_is_full() throws ParkingLotFullException {
         ParkingLot parkingLot = new ParkingLot(1);
-        Car car = new Car("111111");
         parkingLot.park(car);
 
-        Car car2 = new Car("22222");
         thrown.expect(ParkingLotFullException.class);
         parkingLot.park(car2);
     }
