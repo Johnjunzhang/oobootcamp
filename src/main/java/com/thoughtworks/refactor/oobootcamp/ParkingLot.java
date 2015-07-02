@@ -2,7 +2,7 @@ package com.thoughtworks.refactor.oobootcamp;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class ParkingLot {
     private int poolNum;
@@ -13,12 +13,10 @@ public class ParkingLot {
     }
 
     public Ticket park(Car car) throws ParkingLotFullException {
-        if (remainingLots() == 0)
+        if (isFull())
             throw new ParkingLotFullException();
 
-        ParkedCar parkedCar = new ParkedCar(car);
-        parkedCars.add(parkedCar);
-        return parkedCar.getTicket();
+        return doPark(car);
     }
 
     public int remainingLots() {
@@ -26,13 +24,26 @@ public class ParkingLot {
     }
 
     public Car fetch(Ticket ticket) {
-        List<ParkedCar> parkedCars = this.parkedCars.stream()
-                .filter((parkedCar) -> parkedCar.isMatch(ticket))
-                .collect(Collectors.toList());
+        Optional<ParkedCar> parkedCars = getParkedCar(ticket);
 
-        if (parkedCars.size() == 0)
+        if (!parkedCars.isPresent())
             return null;
 
-        return parkedCars.get(0).getCar();
+        return parkedCars.get().getCar();
+    }
+
+    private Optional<ParkedCar> getParkedCar(Ticket ticket) {
+        return this.parkedCars.stream()
+                    .filter((parkedCar) -> parkedCar.isMatch(ticket)).findAny();
+    }
+
+    private boolean isFull() {
+        return remainingLots() == 0;
+    }
+
+    private Ticket doPark(Car car) {
+        ParkedCar parkedCar = new ParkedCar(car);
+        parkedCars.add(parkedCar);
+        return parkedCar.getTicket();
     }
 }
