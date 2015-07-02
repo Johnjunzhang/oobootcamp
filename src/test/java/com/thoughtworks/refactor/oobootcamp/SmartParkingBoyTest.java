@@ -26,7 +26,7 @@ public class SmartParkingBoyTest {
     }
 
     private ParkingBoy getParkingBoy() {
-        SmartParkingBoy parkingBoy = new SmartParkingBoy();
+        ParkingBoy parkingBoy = new ParkingBoy(new SmartParkingStrategy());
         manageParkingLot(parkingBoy);
         return parkingBoy;
     }

@@ -54,7 +54,7 @@ public class ParkingBoyTest {
     }
 
     private ParkingBoy getParkingBoy() {
-        ParkingBoy parkingBoy = new ParkingBoy();
+        ParkingBoy parkingBoy = new ParkingBoy(new NormalParkingStrategy());
         manageParkingLot(parkingBoy);
         return parkingBoy;
     }

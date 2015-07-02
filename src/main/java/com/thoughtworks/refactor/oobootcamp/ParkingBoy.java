@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParkingBoy {
+    private final ParkingStrategy parkingStrategy;
     protected List<ParkingLot> parkingLots = new ArrayList<>();
+
+    public ParkingBoy(ParkingStrategy parkingStrategy) {
+        this.parkingStrategy = parkingStrategy;
+    }
 
     public Ticket park(Car car) throws ParkingLotFullException {
         ParkingLot parkingLot = getParkingLot();
@@ -17,13 +22,7 @@ public class ParkingBoy {
     }
 
     protected ParkingLot getParkingLot() {
-        for (ParkingLot parkingLot : parkingLots) {
-            if (!parkingLot.isFull()) {
-                return parkingLot;
-            }
-        }
-
-        return parkingLots.get(0);
+        return parkingStrategy.getParkingLot(parkingLots);
     }
 
     public void manage(ParkingLot parkingLot) {
