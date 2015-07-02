@@ -7,13 +7,23 @@ public class ParkingBoy {
     protected List<ParkingLot> parkingLots = new ArrayList<>();
 
     public Ticket park(Car car) throws ParkingLotFullException {
-        for (ParkingLot parkingLot : parkingLots) {
-            if (!parkingLot.isFull()) {
-                return parkingLot.park(car);
-            }
+        ParkingLot parkingLot = getParkingLot();
+
+        if (!parkingLot.isFull()) {
+            return parkingLot.park(car);
         }
 
         throw new ParkingLotFullException();
+    }
+
+    protected ParkingLot getParkingLot() {
+        for (ParkingLot parkingLot : parkingLots) {
+            if (!parkingLot.isFull()) {
+                return parkingLot;
+            }
+        }
+
+        return parkingLots.get(0);
     }
 
     public void manage(ParkingLot parkingLot) {
