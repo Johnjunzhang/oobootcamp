@@ -2,6 +2,7 @@ package com.thoughtworks.refactor.oobootcamp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ParkingLot {
@@ -28,26 +29,22 @@ public class ParkingLot {
     public boolean isFull() {return remainingLots() == 0;}
 
     public Car fetch(Ticket ticket) {
-        List<ParkedCar> parkedCars = getParkedCars(ticket);
+        Optional<ParkedCar> parkedCar = getParkedCars(ticket);
 
-        if (!isCarIn(parkedCars))
+        if (!parkedCar.isPresent())
             return null;
 
-        return parkedCars.get(0).getCar();
+        return parkedCar.get().getCar();
     }
 
     public boolean isCarIn(Ticket ticket){
-        List<ParkedCar> parkedCars = getParkedCars(ticket);
-        return isCarIn(parkedCars);
+        Optional<ParkedCar> parkedCar = getParkedCars(ticket);
+        return parkedCar.isPresent();
     }
 
-    private boolean isCarIn(List<ParkedCar> parkedCars) {
-        return parkedCars.size() != 0;
-    }
-
-    private List<ParkedCar> getParkedCars(Ticket ticket) {
+    private java.util.Optional<ParkedCar> getParkedCars(Ticket ticket) {
         return this.parkedCars.stream()
                     .filter((parkedCar) -> parkedCar.isMatch(ticket))
-                    .collect(Collectors.toList());
+                    .findFirst();
     }
 }
