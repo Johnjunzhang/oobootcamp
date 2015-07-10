@@ -25,7 +25,7 @@ public class ParkingBoy {
     }
 
     protected ParkingLot getParkingLot() {
-        return parkingStrategy.getParkingLot(parkingLots);
+        return parkingLots.stream().max(parkingStrategy.compare()).get();
     }
 
     public void manage(ParkingLot parkingLot) {
