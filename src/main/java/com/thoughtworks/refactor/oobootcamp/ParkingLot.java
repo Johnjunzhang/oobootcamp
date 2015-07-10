@@ -1,5 +1,7 @@
 package com.thoughtworks.refactor.oobootcamp;
 
+import com.thoughtworks.refactor.oobootcamp.exceptions.ParkingLotFullException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,8 +27,8 @@ public class ParkingLot {
         return poolNum - parkedCars.size();
     }
 
-    public int vacancyRate() {
-        return remainingLots()/poolNum;
+    public double vacancyRate() {
+        return (double)remainingLots()/poolNum;
     }
 
     public boolean isFull() {return remainingLots() == 0;}

@@ -1,5 +1,8 @@
 package com.thoughtworks.refactor.oobootcamp;
 
+import com.thoughtworks.refactor.oobootcamp.exceptions.ParkingLotFullException;
+import com.thoughtworks.refactor.oobootcamp.parkingStrategies.ParkingStrategy;
+
 import java.util.ArrayList;
 import java.util.List;
 

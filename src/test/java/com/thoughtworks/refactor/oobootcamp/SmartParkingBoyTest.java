@@ -1,5 +1,7 @@
 package com.thoughtworks.refactor.oobootcamp;
 
+import com.thoughtworks.refactor.oobootcamp.exceptions.ParkingLotFullException;
+import com.thoughtworks.refactor.oobootcamp.parkingStrategies.SmartParkingStrategy;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

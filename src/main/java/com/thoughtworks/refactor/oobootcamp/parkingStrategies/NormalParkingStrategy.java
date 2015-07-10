@@ -1,4 +1,6 @@
-package com.thoughtworks.refactor.oobootcamp;
+package com.thoughtworks.refactor.oobootcamp.parkingStrategies;
+
+import com.thoughtworks.refactor.oobootcamp.ParkingLot;
 
 import java.util.List;
 

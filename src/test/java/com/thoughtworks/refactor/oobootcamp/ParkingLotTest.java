@@ -1,5 +1,6 @@
 package com.thoughtworks.refactor.oobootcamp;
 
+import com.thoughtworks.refactor.oobootcamp.exceptions.ParkingLotFullException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
