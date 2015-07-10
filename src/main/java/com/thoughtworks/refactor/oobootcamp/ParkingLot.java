@@ -25,6 +25,10 @@ public class ParkingLot {
         return poolNum - parkedCars.size();
     }
 
+    public int vacancyRate() {
+        return remainingLots()/poolNum;
+    }
+
     public boolean isFull() {return remainingLots() == 0;}
 
     public Car fetch(Ticket ticket) {
